@@ -1,0 +1,157 @@
+
+
+ <!DOCTYPE html>
+ <html lang="en">
+
+ <head>
+ <meta charset="utf-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Block07 Form</title>
+ <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+ <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+ <script src="https://unpkg.com/@babel/standalone@7.10.3/babel.min.js" crossorigin></script>
+ <style>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+    #root {
+        width: 107rem;
+        width: 100%;
+        height: 100vh;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: lightgray;
+
+        background-image: url( https://img.freepik.com/free-vector/traditional-english-letterboxes-set-red-blue-vintage-mailboxes-old-postboxes-with-letters-isolated-white-background_74855-14546.jpg?w=996&t=st=1714026573~exp=1714027173~hmac=37c1eb33e285952fdfddc58fd9508e16794e21f99f9bdb5af4518cc92f5e0cea  );
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+    }
+    label {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 2px;
+        font-size: 17px;
+    }
+    .form-wrapper {
+        max-width: 25rem;
+        width: 100%;
+        padding: 1.25rem;
+        background-color: lightgray;
+        border: 5px solid #5776ac;
+    }
+    form {
+        padding: 0.6rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+        margin-bottom: 0.6rem;
+    }
+    .input-wrapper {
+        width: auto;
+    }
+    input {
+        box-sizing: border-box;
+        width: 100%;
+        height: 1.9rem;
+        padding: 0px 0.3rem;
+        outline: none;
+    }
+    button {
+        padding: 0.6rem 0px;
+        border: none;
+        background-color: #5776ac;
+        cursor: pointer;
+        color: white;
+    }
+    h2 {
+        padding: 0.3rem;
+        text-align: center;
+        color: white;
+    }
+    img {
+        display: block;
+        margin: 0 auto;
+    }
+ </style>
+</head>
+
+<body>
+ <div id="root"></div>
+
+ <script type="text/babel" data-presets="react,stage-3">
+
+   const App = () => {
+      const [email, setEmail] = React.useState("");
+      const [password, setPassword] = React.useState("");
+      const [password2, setPassword2] = React.useState("");
+      const [message, setMessage] = React.useState("");
+      const [messageVisible, setMessageVisible] = React.useState(false);
+
+      const handleSubmit = () => {
+        switch (true) {
+          case (!email.includes("@") || email.split("@").length !== 2):
+            setMessage("Please provide a valid email.");
+            setMessageVisible(true);
+            break;
+          case (password !== password2):
+            setMessage("Passwords should match.");
+            setMessageVisible(true);
+            break;
+          case (password.length < 8):
+            setMessage("Password must have at least 8 characters.");
+            setMessageVisible(true);
+            break;
+          default:
+            setMessage("Successfully registered");
+            setMessageVisible(true);
+            setEmail("");
+            setPassword("");
+            setPassword2("");
+        }
+
+        setTimeout(() => {
+            setMessageVisible(false);
+        }, 2000);
+      };
+
+      return (
+         <div className='form-wrapper'>
+            <img width="50" height="50" src="https://img.icons8.com/ios/50/secured-letter--v1.png" alt="secured-letter--v1"/>
+
+            <form>
+                <div className="input-wrapper"> 
+                   <label for="e">Email:</label>
+                   <input id="e" type="email" name="email" value={email} required onChange={(e) => setEmail(e.target.value)} />
+                </div>
+
+                <div className="input-wrapper"> 
+                    <label for="p">Password:</label>
+                    <input id="p" type="password" name="password" value={password} required onChange={(e) => setPassword(e.target.value)} />
+                </div>
+
+                <div className="input-wrapper"> 
+                    <label for="p2">Confirm password:</label>
+                    <input id="p2" type="password" name="password2" value={password2} required onChange={(e) => setPassword2(e.target.value)} />
+                </div>
+
+
+               <button type="button" onClick={handleSubmit}>Submit</button>
+            </form>
+
+            {messageVisible && <h2 style={{ backgroundColor: message.includes("valid") ? "red" : "green" }}>{message}</h2>}
+         </div>
+      );
+   };
+
+   const root = ReactDOM.createRoot(document.getElementById("root"))
+   root.render(<App />);
+ </script>
+</body>
+
+</html>
+
+
